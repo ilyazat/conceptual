@@ -3,6 +3,7 @@ from fastapi import status, HTTPException
 from fastapi.encoders import jsonable_encoder
 from app.models.annotators import AnnotatorList, AnnotatorListImport, AnnotatorImportConfig, AnnotatorItem
 from app.db import get_database
+from bson import ObjectId
 
 router = APIRouter(prefix="/annotators")
 
@@ -17,17 +18,18 @@ async def get_annotators():
     return {"name": "foo"}
 
 
-@router.post("/")
+@router.post("/", status_code=201)
 async def add_one_annotator(annotator: AnnotatorItem, db=Depends(get_database)):
+    print(jsonable_encoder(annotator))
     last_id = await db.annotators.insert_one(jsonable_encoder(annotator))
-    return last_id
 
 
 @router.get("/{item_id}", status_code=200)
 async def get_annotators_by_id(item_id: str, db=Depends(get_database)):
     annotator = await db.annotators.find_one({"id": item_id})
+    raise Exception(dir(annotator))
     if annotator:
-        return annotator
+        return annotator.id
     else:
         return HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
