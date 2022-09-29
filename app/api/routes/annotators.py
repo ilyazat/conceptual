@@ -1,9 +1,12 @@
-from fastapi import APIRouter, Depends
-from fastapi import status, HTTPException
-from fastapi.encoders import jsonable_encoder
-from app.models.annotators import AnnotatorList, AnnotatorListImport, AnnotatorImportConfig, AnnotatorItem
 from app.db import get_database
-from bson import ObjectId
+from app.models.annotators import (
+    AnnotatorImportConfig,
+    AnnotatorItem,
+    AnnotatorList,
+    AnnotatorListImport,
+)
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.encoders import jsonable_encoder
 
 router = APIRouter(prefix="/annotators")
 
@@ -20,20 +23,18 @@ async def get_annotators():
 
 @router.post("/", status_code=201)
 async def add_one_annotator(annotator: AnnotatorItem, db=Depends(get_database)):
-    print(jsonable_encoder(annotator))
     last_id = await db.annotators.insert_one(jsonable_encoder(annotator))
+    return {"description": "annotator has been successfully added"}
 
 
-@router.get("/{item_id}", status_code=200)
+@router.get("/{item_id}")
 async def get_annotators_by_id(item_id: str, db=Depends(get_database)):
     annotator = await db.annotators.find_one({"id": item_id})
-    raise Exception(dir(annotator))
     if annotator:
-        return annotator.id
+        return AnnotatorItem(**annotator)
     else:
-        return HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Annotator wasn't found"
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Annotator wasn't found"
         )
 
 
@@ -43,14 +44,16 @@ async def test(commons: int = Depends(get_database)):
 
 
 @router.post("/import", status_code=status.HTTP_201_CREATED)
-async def import_annotators(imports: AnnotatorListImport, config: AnnotatorImportConfig):
+async def import_annotators(
+    imports: AnnotatorListImport, config: AnnotatorImportConfig
+):
     """
     Import custom annotators
     Args:
         imports: list of importing annotators
         config: config for setting up importing annotators
     """
-    print(f'{imports=} & {config=}')
+    print(f"{imports=} & {config=}")
 
 
 @router.put("/update/{item_id}", status_code=status.HTTP_201_CREATED)

@@ -1,6 +1,10 @@
 from fastapi import APIRouter
 from fastapi import status
-from app.models.distributions import DistributionList, DistributionListImport, DistributionImportConfig
+from app.models.distributions import (
+    DistributionList,
+    DistributionListImport,
+    DistributionImportConfig,
+)
 
 router = APIRouter(prefix="/distribution")
 
@@ -16,14 +20,16 @@ async def get_distribution():
 
 
 @router.post("/import", status_code=status.HTTP_201_CREATED)
-async def import_distribution(imports: DistributionListImport, config: DistributionImportConfig):
+async def import_distribution(
+    imports: DistributionListImport, config: DistributionImportConfig
+):
     """
     Import custom distribution
     Args:
         imports: list of importing distributions
         config: config for setting up importing distributions
     """
-    print(f'{imports=} & {config=}')
+    print(f"{imports=} & {config=}")
 
 
 @router.put("/update/{item_id}", status_code=status.HTTP_201_CREATED)
