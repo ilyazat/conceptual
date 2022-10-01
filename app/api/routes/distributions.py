@@ -1,10 +1,7 @@
-from fastapi import APIRouter
-from fastapi import status
-from app.models.distributions import (
-    DistributionList,
-    DistributionListImport,
-    DistributionImportConfig,
-)
+from fastapi import APIRouter, status
+
+from app.models.distributions import (DistributionImportConfig,
+                                      DistributionList, DistributionListImport)
 
 router = APIRouter(prefix="/distribution")
 

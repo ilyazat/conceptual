@@ -1,6 +1,6 @@
-from fastapi import APIRouter
-from fastapi import status
-from app.models.skills import SkillList, SkillsListImport, SkillsImportConfig
+from fastapi import APIRouter, status
+
+from app.models.skills import SkillList, SkillsImportConfig, SkillsListImport
 
 router = APIRouter(prefix="/skills")
 
