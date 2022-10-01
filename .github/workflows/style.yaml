@@ -1,9 +1,9 @@
 name: Run isort
 on:
   push:
-    branches: [ "feat/isort" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "feat/isort" ]
+    branches: [ "main" ]
 
 jobs:
   build:
