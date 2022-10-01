@@ -2,8 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 
 from app.db import get_database
-from app.models.annotators import (AnnotatorImportConfig, AnnotatorItem,
-                                   AnnotatorList, AnnotatorListImport)
+from app.models.annotators import (
+    AnnotatorImportConfig,
+    AnnotatorItem,
+    AnnotatorList,
+    AnnotatorListImport,
+)
 
 router = APIRouter(prefix="/annotators")
 

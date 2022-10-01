@@ -1,4 +1,4 @@
-name: Run isort
+name: codestyle
 on:
   push:
     branches: [ "main" ]
@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: isort/isort-action@master
+      - uses: psf/black@stable
