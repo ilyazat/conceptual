@@ -20,9 +20,7 @@ async def get_distribution():
 
 
 @router.post("/import", status_code=status.HTTP_201_CREATED)
-async def import_distribution(
-    imports: DistributionListImport, config: DistributionImportConfig
-):
+async def import_distribution(imports: DistributionListImport, config: DistributionImportConfig):
     """
     Import custom distribution
     Args:

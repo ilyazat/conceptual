@@ -22,9 +22,7 @@ class DreamComponent:
         Args:
             dream_root: path to Dream module
         """
-        self.dream_root = (
-            dream_root if isinstance(dream_root, Path) else Path(dream_root)
-        )
+        self.dream_root = dream_root if isinstance(dream_root, Path) else Path(dream_root)
 
     def get_list(self, component_name: str, to_json: bool = False) -> Optional[list, str]:
         """

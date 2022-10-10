@@ -34,9 +34,7 @@ async def get_annotators_by_id(item_id: str, db=Depends(get_database)):
     if annotator:
         return AnnotatorItem(**annotator)
     else:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Annotator wasn't found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Annotator wasn't found")
 
 
 @router.get("/test")
@@ -45,9 +43,7 @@ async def test(commons: int = Depends(get_database)):
 
 
 @router.post("/import", status_code=status.HTTP_201_CREATED)
-async def import_annotators(
-    imports: AnnotatorListImport, config: AnnotatorImportConfig
-):
+async def import_annotators(imports: AnnotatorListImport, config: AnnotatorImportConfig):
     """
     Import custom annotators
     Args:
