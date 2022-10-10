@@ -18,6 +18,10 @@ class DreamComponent:
     }
 
     def __init__(self, dream_root: Optional[Path, str]) -> None:
+        """
+        Args:
+            dream_root: path to Dream module
+        """
         self.dream_root = (
             dream_root if isinstance(dream_root, Path) else Path(dream_root)
         )
